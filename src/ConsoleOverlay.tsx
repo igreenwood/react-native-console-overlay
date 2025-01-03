@@ -199,9 +199,6 @@ export const ConsoleOverlay: React.FC<ConsoleOverlayProps> = ({
   }, [])
 
   useEffect(() => {
-    if (!isMinimized) {
-      scrollViewRef.current?.scrollToEnd({animated: true})
-    }
     constrain()
   }, [logs, isMinimized, constrain])
 
