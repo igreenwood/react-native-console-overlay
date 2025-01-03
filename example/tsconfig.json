@@ -1,0 +1,11 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "typeRoots": ["./src/typings", "./node_modules/@types"],
+    "jsx": "react-native",
+    "paths": {
+      "~/*": ["./src/*"]
+    }
+  }
+}

@@ -1,4 +1,28 @@
 {
-  "name": "ConsoleOverlayExample",
-  "displayName": "ConsoleOverlayExample"
+  "expo": {
+    "name": "ConsoleOverlayExample",
+    "scheme": "igreenwood",
+    "slug": "react-native-console-overlay",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.igreenwood.example"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.igreenwood.example"
+    },
+    "plugins": ["expo-router"]
+  }
 }
