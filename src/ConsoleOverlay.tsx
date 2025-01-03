@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useMemo, useCallback, useRef} from 'react'
-import type {ViewStyle, TextStyle, ImageStyle} from 'react-native'
+import type {ViewStyle, TextStyle, ImageStyle, ColorValue} from 'react-native'
 import {
   View,
   StyleSheet,
@@ -19,12 +19,45 @@ import ShrinkIcon from './assets/shrink.png'
 
 const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = Dimensions.get('window')
 const CONSOLE_WIDTH = SCREEN_WIDTH
-const CONSOLE_HEIGHT = SCREEN_HEIGHT / 4
+
 const MINIMIZED_HEIGHT = 48
 const MINIMIZED_WIDTH = 48
-const BORDER_WIDTH = 16 // ドラッグ可能な外周の幅
+const PADDING = 16 // ドラッグ可能な外周の幅
+const BORDER_WIDTH = 1
 
-export const ConsoleOverlay: React.FC = () => {
+interface ConsoleOverlayProps {
+  textColor?: string
+  logBackgroundColors?: {
+    log?: ColorValue
+    debug?: ColorValue
+    info?: ColorValue
+    warn?: ColorValue
+    error?: ColorValue
+    dir?: ColorValue
+  }
+  containerOpacity?: number
+  fontSize?: number
+  lineHeight?: number
+  heightScale?: number // 0.1 <= scale <= 0.9
+}
+
+export const ConsoleOverlay: React.FC<ConsoleOverlayProps> = ({
+  textColor = 'white',
+  logBackgroundColors = {
+    log: 'white',
+    debug: 'white',
+    info: 'blue',
+    warn: 'orange',
+    error: 'red',
+    dir: 'white'
+  },
+  containerOpacity = 0.9,
+  fontSize = 12,
+  lineHeight = 12 * 1.8,
+  heightScale = 0.25
+}) => {
+  const validatedHeightScale = Math.min(Math.max(heightScale, 0.1), 0.9)
+  const consoleHeight = SCREEN_HEIGHT * validatedHeightScale
   const [logs, setLogs] = useState<LogEntry[]>([])
   const [position, setPosition] = useState({x: 0, y: 0})
   const [isMinimized, setIsMinimized] = useState(false)
@@ -36,7 +69,7 @@ export const ConsoleOverlay: React.FC = () => {
     const y = position.y
     const maxX = SCREEN_WIDTH - (isMinimized ? MINIMIZED_WIDTH : CONSOLE_WIDTH)
     const maxY =
-      SCREEN_HEIGHT - (isMinimized ? MINIMIZED_HEIGHT : CONSOLE_HEIGHT)
+      SCREEN_HEIGHT - (isMinimized ? MINIMIZED_HEIGHT : consoleHeight)
     if (x < 0 || x > maxX || y < 0 || y > maxY) {
       setPosition({
         x: Math.max(0, Math.min(x, maxX)),
@@ -64,8 +97,7 @@ export const ConsoleOverlay: React.FC = () => {
               0,
               Math.min(
                 position.y + dy,
-                SCREEN_HEIGHT -
-                  (isMinimized ? MINIMIZED_HEIGHT : CONSOLE_HEIGHT)
+                SCREEN_HEIGHT - (isMinimized ? MINIMIZED_HEIGHT : consoleHeight)
               )
             )
           })
@@ -96,14 +128,16 @@ export const ConsoleOverlay: React.FC = () => {
       container: {
         position: 'absolute',
         width: isMinimized ? MINIMIZED_WIDTH : CONSOLE_WIDTH,
-        height: isMinimized ? MINIMIZED_HEIGHT : CONSOLE_HEIGHT,
+        height: isMinimized ? MINIMIZED_HEIGHT : consoleHeight,
         backgroundColor: 'black',
-        opacity: 0.9,
-        borderRadius: 8,
+        borderColor: 'gray',
+        borderWidth: BORDER_WIDTH,
+        opacity: containerOpacity,
+        borderRadius: 16,
         overflow: 'hidden'
       },
       topDraggable: {
-        height: BORDER_WIDTH,
+        height: PADDING,
         width: '100%'
       },
       centerContainer: {
@@ -111,49 +145,39 @@ export const ConsoleOverlay: React.FC = () => {
         flex: 1
       },
       leftDraggable: {
-        width: BORDER_WIDTH
+        width: PADDING
       },
       rightDraggable: {
-        width: BORDER_WIDTH
+        width: PADDING
       },
       bottomDraggable: {
-        height: BORDER_WIDTH,
+        height: PADDING,
         width: '100%'
       },
       console: {
         flex: 1
       },
       textInput: {
-        flex: 1,
-        color: 'white'
+        fontSize,
+        lineHeight,
+        color: textColor
       },
-      logText: {
-        fontSize: 12,
-        userSelect: 'text'
-      },
-      log: {color: 'white'},
-      debug: {color: 'white'},
-      info: {color: 'blue'},
-      warn: {color: 'orange'},
-      error: {color: 'red'},
-      dir: {color: 'white'},
+      log: {backgroundColor: logBackgroundColors.log, color: 'black'},
+      debug: {backgroundColor: logBackgroundColors.debug, color: 'black'},
+      info: {backgroundColor: logBackgroundColors.info, color: 'black'},
+      warn: {backgroundColor: logBackgroundColors.warn, color: 'black'},
+      error: {backgroundColor: logBackgroundColors.error, color: 'black'},
+      dir: {backgroundColor: logBackgroundColors.dir, color: 'black'},
       minimizeButton: {
         position: 'absolute',
-        top: BORDER_WIDTH,
-        right: BORDER_WIDTH,
+        top: PADDING,
+        right: PADDING,
         opacity: 1,
         backgroundColor: 'black'
       },
       icon: {
         width: 16,
         height: 16
-      },
-      dragButton: {
-        position: 'absolute',
-        top: BORDER_WIDTH,
-        left: BORDER_WIDTH,
-        opacity: 1,
-        backgroundColor: 'black'
       }
     })
   }, [isMinimized])
@@ -204,31 +228,45 @@ export const ConsoleOverlay: React.FC = () => {
               onContentSizeChange={() =>
                 scrollViewRef.current?.scrollToEnd({animated: true})
               }
-              scrollEventThrottle={16}>
-              {/* iosで複数行テキスト選択させるための手法、逆にandroidでは選択できない */}
+              scrollEventThrottle={1}>
               {Platform.OS === 'ios' ? (
                 <TextInput
-                  value={(() => {
-                    let logContent = ''
-                    for (const log of logs) {
-                      logContent += `[${log.type}] ${log.content}\n`
-                    }
-                    return logContent
-                  })()}
                   multiline
                   editable={false}
                   scrollEnabled={false}
-                  style={styles.textInput}
-                />
+                  style={styles.textInput}>
+                  {logs.map((log, index) => {
+                    return (
+                      <TextInput
+                        key={index}
+                        editable={false}
+                        scrollEnabled={false}>
+                        <Text
+                          style={
+                            styles[log.type]
+                          }>{` ${log.type.toUpperCase()} `}</Text>
+                        <TextInput
+                          multiline
+                          editable={false}
+                          scrollEnabled={false}>
+                          {` ${log.content}\n`}
+                        </TextInput>
+                      </TextInput>
+                    )
+                  })}
+                </TextInput>
               ) : (
                 <Text selectable style={styles.textInput}>
-                  {(() => {
-                    let logContent = ''
-                    for (const log of logs) {
-                      logContent += `[${log.type}] ${log.content}\n`
-                    }
-                    return logContent
-                  })()}
+                  {logs.map((log, index) => {
+                    return (
+                      <Text key={index}>
+                        <Text key={index} style={styles[log.type]}>
+                          {` ${log.type.toUpperCase()} `}
+                        </Text>
+                        <Text key={index}>{` ${log.content}\n`}</Text>
+                      </Text>
+                    )
+                  })}
                 </Text>
               )}
             </ScrollView>
@@ -264,7 +302,6 @@ interface Styles {
   bottomDraggable: ViewStyle
   console: ViewStyle
   textInput: TextStyle
-  logText: TextStyle
   log: TextStyle
   debug: TextStyle
   info: TextStyle
@@ -273,5 +310,4 @@ interface Styles {
   dir: TextStyle
   minimizeButton: ViewStyle
   icon: ImageStyle
-  dragButton: ViewStyle
 }
