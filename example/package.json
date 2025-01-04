@@ -1,6 +1,6 @@
 {
   "name": "react-native-console-overlay-example",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "version": "0.1.0",
   "main": "expo-router/entry",
   "scripts": {

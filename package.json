@@ -46,7 +46,7 @@
     "url": "git+https://github.com/igreenwood/react-native-console-overlay.git"
   },
   "author": "igreenwood <i.greenwood.dev@gmail.com> (https://github.com/igreenwood)",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/igreenwood/react-native-console-overlay/issues"
   },
