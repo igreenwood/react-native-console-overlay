@@ -59,7 +59,7 @@ export const ConsoleOverlay: React.FC<ConsoleOverlayProps> = ({
   const validatedHeightScale = Math.min(Math.max(heightScale, 0.1), 0.9)
   const consoleHeight = SCREEN_HEIGHT * validatedHeightScale
   const [logs, setLogs] = useState<LogEntry[]>([])
-  const [position, setPosition] = useState({x: 0, y: 0})
+  const [position, setPosition] = useState({x: 0, y: SCREEN_HEIGHT})
   const [isMinimized, setIsMinimized] = useState(false)
 
   const scrollViewRef = useRef<ScrollView>(null)
