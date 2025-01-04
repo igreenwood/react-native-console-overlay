@@ -1,7 +1,7 @@
 {
-  "name": "example",
+  "name": "react-native-console-overlay-example",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "expo-router/entry",
   "scripts": {
     "android": "npx expo prebuild --platform android && npx expo run:android",
