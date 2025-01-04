@@ -147,7 +147,7 @@ export const ConsoleOverlay: React.FC<ConsoleOverlayProps> = ({
         borderColor: 'gray',
         borderWidth: BORDER_WIDTH,
         opacity: containerOpacity,
-        borderRadius: 16,
+        borderRadius: 8,
         overflow: 'hidden',
         zIndex: 999,
       },
@@ -185,8 +185,8 @@ export const ConsoleOverlay: React.FC<ConsoleOverlayProps> = ({
       dir: { backgroundColor: logBackgroundColors.dir, color: 'black' },
       minimizeButton: {
         position: 'absolute',
-        top: PADDING,
-        right: PADDING,
+        top: PADDING - BORDER_WIDTH,
+        right: PADDING - BORDER_WIDTH,
         opacity: 1,
         backgroundColor: 'black',
       },
@@ -253,13 +253,13 @@ export const ConsoleOverlay: React.FC<ConsoleOverlayProps> = ({
                         key={index}
                         editable={false}
                         scrollEnabled={false}>
+                        {showTimestamp && (
+                          <Text>{` ${log.timestamp.toLocaleTimeString()} `}</Text>
+                        )}
                         <Text
                           style={
                             styles[log.type]
                           }>{` ${log.type.toUpperCase()} `}</Text>
-                        {showTimestamp && (
-                          <Text>{` ${log.timestamp.toLocaleTimeString()} `}</Text>
-                        )}
                         <TextInput
                           multiline
                           editable={false}
@@ -275,12 +275,12 @@ export const ConsoleOverlay: React.FC<ConsoleOverlayProps> = ({
                   {logs.map((log, index) => {
                     return (
                       <Text key={index}>
-                        <Text key={index} style={styles[log.type]}>
-                          {` ${log.type.toUpperCase()} `}
-                        </Text>
                         {showTimestamp && (
                           <Text>{` ${log.timestamp.toLocaleTimeString()} `}</Text>
                         )}
+                        <Text key={index} style={styles[log.type]}>
+                          {` ${log.type.toUpperCase()} `}
+                        </Text>
                         <Text key={index}>{` ${log.content}\n`}</Text>
                       </Text>
                     );
