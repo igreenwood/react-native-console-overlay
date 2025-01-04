@@ -1,22 +1,22 @@
-import {useCallback, FC, PropsWithChildren} from 'react'
-import {View, Text, TouchableOpacity} from 'react-native'
-import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context'
-import {ConsoleOverlay, LogType} from 'react-native-console-overlay'
+import { useCallback, FC, PropsWithChildren } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { ConsoleOverlay, LogType } from 'react-native-console-overlay';
 
 export default function Home() {
-  console.info('app started')
+  console.info('app started');
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={{ flex: 1 }}>
         <View
           style={{
             flex: 1,
             justifyContent: 'flex-start',
             alignItems: 'center',
-            padding: 16
+            padding: 16,
           }}>
-          <Text style={{paddingVertical: 32}}>
+          <Text style={{ paddingVertical: 32 }}>
             Welcome to React Native Console Overlay Example!
           </Text>
           <Button type="log" />
@@ -34,27 +34,31 @@ export default function Home() {
         <ConsoleOverlay showTimestamp />
       </SafeAreaView>
     </SafeAreaProvider>
-  )
+  );
 }
 
 type ButtonProps = {
-  type: LogType
-  label?: string
-  message?: string
-}
+  type: LogType;
+  label?: string;
+  message?: string;
+};
 
-const Button: FC<PropsWithChildren<ButtonProps>> = ({type, label, message}) => {
+const Button: FC<PropsWithChildren<ButtonProps>> = ({
+  type,
+  label,
+  message,
+}) => {
   const colors = {
     log: 'white',
     debug: 'white',
     info: 'blue',
     warn: 'orange',
     error: 'red',
-    dir: 'white'
-  }
+    dir: 'white',
+  };
   const onPress = useCallback((_type: LogType) => {
-    console[_type](message ? message : `${_type} clicked`)
-  }, [])
+    console[_type](message ? message : `${_type} clicked`);
+  }, []);
   return (
     <TouchableOpacity
       style={{
@@ -64,12 +68,12 @@ const Button: FC<PropsWithChildren<ButtonProps>> = ({type, label, message}) => {
         borderRadius: 16,
         borderWidth: 1,
         borderColor: 'gray',
-        width: '80%'
+        width: '80%',
       }}
       onPress={() => onPress(type)}>
-      <Text style={{alignSelf: 'center', color: 'gray'}}>
+      <Text style={{ alignSelf: 'center', color: 'gray' }}>
         {label ? label : type}
       </Text>
     </TouchableOpacity>
-  )
-}
+  );
+};

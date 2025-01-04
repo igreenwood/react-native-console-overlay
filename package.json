@@ -30,6 +30,8 @@
     "test": "jest",
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "fix:eslint": "eslint -- --fix",
+    "fix:prettier": "prettier -w .",
     "clean": "del-cli lib",
     "build": "bob build",
     "release": "release-it"
@@ -55,7 +57,8 @@
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
     "@react-native-community/cli": "15.0.1",
-    "@react-native/eslint-config": "^0.73.1",
+    "@react-native/eslint-config": "^0.76.1",
+    "@react-native/eslint-plugin": "^0.74.0",
     "@release-it/conventional-changelog": "^9.0.2",
     "@types/jest": "^29.5.5",
     "@types/react": "~18.3.12",
@@ -71,7 +74,8 @@
     "react-native-builder-bob": "^0.35.2",
     "release-it": "^17.10.0",
     "turbo": "^1.10.7",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "@ubie/prettier-config": "^0.1.0"
   },
   "peerDependencies": {
     "react": "*",
@@ -126,12 +130,12 @@
           "quoteProps": "consistent",
           "singleQuote": true,
           "tabWidth": 2,
-          "trailingComma": "none",
+          "trailingComma": "all",
           "useTabs": false,
-          "semi": false,
+          "semi": true,
           "arrowParens": "avoid",
           "bracketSameLine": true,
-          "bracketSpacing": false
+          "bracketSpacing": true
         }
       ]
     }
@@ -144,12 +148,12 @@
     "quoteProps": "consistent",
     "singleQuote": true,
     "tabWidth": 2,
-    "trailingComma": "none",
+    "trailingComma": "all",
     "useTabs": false,
-    "semi": false,
+    "semi": true,
     "arrowParens": "avoid",
     "bracketSameLine": true,
-    "bracketSpacing": false
+    "bracketSpacing": true
   },
   "react-native-builder-bob": {
     "source": "src",

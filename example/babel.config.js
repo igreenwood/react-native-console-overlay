@@ -1,8 +1,8 @@
-const path = require('path')
-const {getConfig} = require('react-native-builder-bob/babel-config')
-const pkg = require('../package.json')
+const path = require('path');
+const { getConfig } = require('react-native-builder-bob/babel-config');
+const pkg = require('../package.json');
 
-const root = path.resolve(__dirname, '..')
+const root = path.resolve(__dirname, '..');
 
 module.exports = getConfig(
   {
@@ -12,11 +12,11 @@ module.exports = getConfig(
         'module-resolver',
         {
           alias: {
-            'react-native-console-overlay': '../src/index'
-          }
-        }
-      ]
-    ]
+            'react-native-console-overlay': '../src/index',
+          },
+        },
+      ],
+    ],
   },
-  {root, pkg}
-)
+  { root, pkg },
+);

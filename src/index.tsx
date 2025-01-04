@@ -1,2 +1,2 @@
-export {ConsoleOverlay} from './ConsoleOverlay'
-export type {LogType, LogEntry} from './consoleLogger'
+export { ConsoleOverlay } from './ConsoleOverlay';
+export type { LogType, LogEntry } from './consoleLogger';

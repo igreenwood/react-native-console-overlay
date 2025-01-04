@@ -13,7 +13,7 @@ let logs: LogEntry[] = [];
 
 const addLog = (type: LogType, args: unknown[]): void => {
   const content = args
-    .map((arg) => (typeof arg === 'string' ? arg : JSON.stringify(arg)))
+    .map(arg => (typeof arg === 'string' ? arg : JSON.stringify(arg)))
     .join(' ')
     .trimEnd();
 
