@@ -10,16 +10,12 @@ npm install react-native-console-overlay
 
 ## Usage
 
-```js
+```ts
 import { ConsoleOverlayView } from 'react-native-console-overlay';
 
 // ...
-<ConsoleOverlayView color="tomato" />;
+<ConsoleOverlayView />;
 ```
-
-## Contributing
-
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
 
 ## License
 
