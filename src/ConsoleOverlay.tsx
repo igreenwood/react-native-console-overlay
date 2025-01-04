@@ -134,7 +134,8 @@ export const ConsoleOverlay: React.FC<ConsoleOverlayProps> = ({
         borderWidth: BORDER_WIDTH,
         opacity: containerOpacity,
         borderRadius: 16,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        zIndex: 999
       },
       topDraggable: {
         height: PADDING,
