@@ -26,6 +26,7 @@ const PADDING = 16 // ドラッグ可能な外周の幅
 const BORDER_WIDTH = 1
 
 interface ConsoleOverlayProps {
+  showTimestamp?: boolean
   textColor?: string
   logBackgroundColors?: {
     log?: ColorValue
@@ -42,6 +43,7 @@ interface ConsoleOverlayProps {
 }
 
 export const ConsoleOverlay: React.FC<ConsoleOverlayProps> = ({
+  showTimestamp = false,
   textColor = 'white',
   logBackgroundColors = {
     log: 'white',
@@ -243,6 +245,9 @@ export const ConsoleOverlay: React.FC<ConsoleOverlayProps> = ({
                           style={
                             styles[log.type]
                           }>{` ${log.type.toUpperCase()} `}</Text>
+                        {showTimestamp && (
+                          <Text>{` ${log.timestamp.toLocaleTimeString()} `}</Text>
+                        )}
                         <TextInput
                           multiline
                           editable={false}
@@ -261,6 +266,9 @@ export const ConsoleOverlay: React.FC<ConsoleOverlayProps> = ({
                         <Text key={index} style={styles[log.type]}>
                           {` ${log.type.toUpperCase()} `}
                         </Text>
+                        {showTimestamp && (
+                          <Text>{` ${log.timestamp.toLocaleTimeString()} `}</Text>
+                        )}
                         <Text key={index}>{` ${log.content}\n`}</Text>
                       </Text>
                     )
