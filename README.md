@@ -1,20 +1,35 @@
 # React Native Console Overlay
 
-<img src="/example/assets/icon.png">
+<img src="/showcase/icon.png" width="200">
 
 React Native Console Overlay is a powerful, easy-to-use library that brings console logs directly to your device screen.
 
 Say goodbye to the hassles of traditional debugging and hello to a more efficient & flexible development process 🎉
 
+## How to use
+
+<img src="/showcase/demo.gif">
+
+- Viewing logs: Logs will automatically appear in the central area of the overlay.
+- Scrolling logs: Drag the central area of the overlay to scroll through the logs.
+- Moving the overlay: Drag the outer edges of the overlay to reposition it on the screen.
+- Minimizing: Tap the minimize button to collapse the overlay into a small, movable icon.
+
 ## Features
 
-- On-device console logging
+- Versatile on-device console logging:
+  - Works on both simulators and physical devices
+  - Compatible with Android and iOS platforms
+  - Functional in both development and production builds
 - Support for common console methods (log, debug, info, warn, error, dir)
 - Draggable and resizable overlay
 - Minimizable interface
 - Customizable colors
 - Timestamp display option
 - Cross-platform compatibility (iOS and Android)
+
+> [!NOTE]
+> While usable in production builds, including debug tools in production apps carries risks. Use in production at your own discretion.
 
 ## Installation
 
@@ -81,6 +96,26 @@ The ConsoleOverlay component accepts the following props:
 | fontSize            | number  | 12        | Font size of the log text                                           |
 | lineHeight          | number  | 21.6      | Line height of the log text                                         |
 | heightScale         | number  | 0.25      | Height of the overlay as a proportion of screen height (0.1 to 0.9) |
+
+Default logBackgroundColors:
+
+```typescript
+{
+  log: 'white',
+  debug: 'white',
+  info: 'blue',
+  warn: 'orange',
+  error: 'red',
+  dir: 'white'
+}
+```
+
+See source codes for more details.
+
+## TBD
+
+- Log output to file
+- Component resizing
 
 ## Contributing
 
