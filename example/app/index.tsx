@@ -22,7 +22,6 @@ export default function Home() {
           <Button type="log" />
           <Button type="debug" />
           <Button type="info" />
-          <Button type="dir" />
           <Button type="warn" />
           <Button type="error" />
           <Button
