@@ -278,10 +278,10 @@ export const ConsoleOverlay: React.FC<ConsoleOverlayProps> = ({
                         {showTimestamp && (
                           <Text>{` ${log.timestamp.toLocaleTimeString()} `}</Text>
                         )}
-                        <Text key={index} style={styles[log.type]}>
+                        <Text style={styles[log.type]}>
                           {` ${log.type.toUpperCase()} `}
                         </Text>
-                        <Text key={index}>{` ${log.content}\n`}</Text>
+                        <Text>{` ${log.content}\n`}</Text>
                       </Text>
                     );
                   })}
