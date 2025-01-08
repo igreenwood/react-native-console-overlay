@@ -21,6 +21,7 @@ Say goodbye to the hassles of traditional debugging and hello to a more efficien
   - Works on both simulators and physical devices
   - Compatible with Android and iOS platforms
   - Functional in both development and production builds
+  - Displays logs from your app as well as other SDKs (e.g., Expo)
 - Support for common console methods (log, debug, info, warn, error, dir)
 - Draggable and resizable overlay
 - Minimizable interface
@@ -44,7 +45,6 @@ yarn add react-native-console-overlay
 Add the ConsoleOverlay component to your app's root component.
 
 ```typescript
-
 import React from 'react';
 import { View } from 'react-native';
 import { ConsoleOverlay } from 'react-native-console-overlay';
@@ -64,7 +64,6 @@ export default App;
 It is useful to use flags to toggle visibility so that you can view logs whenever you want in the application.
 
 ```typescript
-
 import React from 'react';
 import { View } from 'react-native';
 import { ConsoleOverlay } from 'react-native-console-overlay';
@@ -112,6 +111,10 @@ Default logBackgroundColors:
 
 See source codes for more details.
 
+## Known Issues
+
+- On iOS, there might be an empty space at the end of the logs in some cases. (The logs can be viewed by scrolling.)
+
 ## TBD
 
 - Log output to file
@@ -123,4 +126,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the Apache License, Version 2.0 - see the LICENSE file for details.
